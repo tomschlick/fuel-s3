@@ -3,7 +3,7 @@
 /**
  * FuelPHP package for the Amazon S3 PHP Class
  *
- * @package		Postmark
+ * @package		S3
  * @version		1.0
  * @author		Tom Schlick (tom@tomschlick.com)
  * @link		http://github.com/tomschlick/fuel-s3
