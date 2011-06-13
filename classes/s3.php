@@ -63,7 +63,7 @@ class S3 {
 	{
 		\Config::load('s3', true);
 		self::set_auth(\Config::get('s3.access_key_id'), \Config::get('s3.secret_access_key'));
-		self::$use_ss_l = $config['enable_ssl'];
+		self::$use_ss_l = \Config::get('s3.enable_ssl');
 	}
 	
 	
