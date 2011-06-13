@@ -35,7 +35,7 @@ final class S3_Request
 		}
 		$this->headers['Date'] = gmdate('D, d M Y H:i:s T');
 		
-		$this->response = new STD_Class;
+		$this->response = new \stdClass();
 		$this->response->error = false;
 	}
 	
@@ -147,8 +147,8 @@ final class S3_Request
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
-		curl_setopt($curl, CURLOPT_WRITEFUNCTION, array(&$this, '__responseWriteCallback'));
-		curl_setopt($curl, CURLOPT_HEADERFUNCTION, array(&$this, '__responseHeaderCallback'));
+		curl_setopt($curl, CURLOPT_WRITEFUNCTION, array(&$this, '__response_write_callback'));
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, array(&$this, '__response_header_callback'));
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 		
 		// Request types

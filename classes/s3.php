@@ -61,8 +61,8 @@ class S3 {
 	 */
 	public function __construct()
 	{
-		$config = \Config('s3');
-		self::set_auth($config['access_key_id'], $config['secret_access_key']);
+		\Config::load('s3', true);
+		self::set_auth(\Config::get('s3.access_key_id'), \Config::get('s3.secret_access_key'));
 		self::$use_ss_l = $config['enable_ssl'];
 	}
 	
@@ -815,18 +815,18 @@ class S3 {
 	public static function get_http_upload_post_params($bucket, $uri_prefix = '', $acl = self::ACL_PRIVATE, $lifetime = 3600, $max_file_size = 5242880, $success_redirect = "201", $amz_headers = array(), $headers = array(), $flash_vars = false)
 	{
 		// Create policy object
-		$policy = new std_Class;
+		$policy = new \stdClass();
 		$policy->expiration = gmdate('Y-m-d\TH:i:s\Z', (time() + $lifetime));
 		$policy->conditions = array();
-		$obj = new std_Class;
+		$obj = new \stdClass();
 		$obj->bucket = $bucket;
 		array_push($policy->conditions, $obj);
-		$obj = new std_Class;
+		$obj = new \stdClass();
 		$obj->acl = $acl;
 		array_push($policy->conditions, $obj);
 		
 		// 200 for non-redirect uploads
-		$obj = new std_Class;
+		$obj = new \stdClass();
 		if (is_numeric($success_redirect) && in_array((int)$success_redirect, array(200, 201)))
 			$obj->success_action_status = (string)$success_redirect;
 		else
@@ -841,7 +841,7 @@ class S3 {
 			array_push($policy->conditions, array('starts-with', '$' . $header_key, ''));
 		foreach ($amz_headers as $header_key => $header_val)
 		{
-			$obj = new std_Class;
+			$obj = new \stdClass();
 			$obj->{$header_key} = (string)$header_val;
 			array_push($policy->conditions, $obj);
 		}
@@ -849,7 +849,7 @@ class S3 {
 		$policy = base64_encode(str_replace('\/', '/', json_encode($policy)));
 		
 		// Create parameters
-		$params = new std_Class;
+		$params = new \stdClass();
 		$params->aws_access_key_id = self::$__access_key;
 		$params->key = $uri_prefix . '${filename}';
 		$params->acl = $acl;
