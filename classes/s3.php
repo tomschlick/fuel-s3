@@ -53,17 +53,34 @@ class S3 {
 	
 	/**
 	 * Constructor - if you're not using the class statically
-	 *
-	 * @param string $access_key Access key
-	 * @param string $secret_key Secret key
-	 * @param boolean $use_ss_l Enable SSL
 	 * @return void
 	 */
 	public function __construct()
 	{
+		self::_init();
+	}
+
+	/**
+	 * Initialization function for the FuelPHP autoloader to run
+	 * Loads the auth keys and sets up the authentication for the S3 service
+	 * @return void
+	 */
+	public static function _init()
+	{
 		\Config::load('s3', true);
-		self::set_auth(\Config::get('s3.access_key_id'), \Config::get('s3.secret_access_key'));
+		$access_key_id = \Config::get('s3.access_key_id');
+		$secret_access_key = \Config::get('s3.secret_access_key');
+
+		if( empty($access_key_id) or empty($secret_access_key) )
+		{
+			throw new Exception( sprintf("S3::_init(): Empty access_key_id or secret_access_key. Check the s3 config." ) );
+		}
+
+		self::set_auth( $access_key_id, $secret_access_key );
 		self::$use_ss_l = \Config::get('s3.enable_ssl');
+
+		unset($access_key_id);
+		unset($secret_access_key);
 	}
 	
 	
