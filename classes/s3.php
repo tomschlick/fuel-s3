@@ -73,7 +73,7 @@ class S3 {
 
 		if( empty($access_key_id) or empty($secret_access_key) )
 		{
-			throw new Exception( sprintf("S3::_init(): Empty access_key_id or secret_access_key. Check the s3 config." ) );
+			throw new \Exception( sprintf("S3::_init(): Empty access_key_id or secret_access_key. Check the s3 config." ) );
 		}
 
 		self::set_auth( $access_key_id, $secret_access_key );
@@ -83,7 +83,7 @@ class S3 {
 		unset($secret_access_key);
 	}
 	
-	
+
 	/**
 	 * Set AWS access key and secret key
 	 *
