@@ -112,7 +112,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception( sprintf("S3::list_buckets(): [%s] %s", $rest->error['code'], $rest->error['message']) );
+			throw new \Exception( sprintf("S3::list_buckets(): [%s] %s", $rest->error['code'], $rest->error['message']) );
 		}
 		$results = array();
 		if (!isset($rest->body->buckets))
@@ -163,7 +163,7 @@ class S3 {
 			$response->error = array('code' => $response->code, 'message' => 'Unexpected HTTP status');
 		if ($response->error !== false)
 		{
-			throw new Exception( sprintf("S3::get_bucket(): [%s] %s", $response->error['code'], $response->error['message']) );
+			throw new \Exception( sprintf("S3::get_bucket(): [%s] %s", $response->error['code'], $response->error['message']) );
 		}
 		
 		$results = array();
@@ -250,7 +250,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::put_bucket({$bucket}, {$acl}, {$location}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::put_bucket({$bucket}, {$acl}, {$location}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return true;
 	}
@@ -270,7 +270,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::delete_bucket({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::delete_bucket({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return true;
 	}
@@ -305,7 +305,7 @@ class S3 {
 	{
 		if (!is_resource($resource) || $buffer_size < 0)
 		{
-			throw new Exception('S3::input_resource(): Invalid resource or buffer size');
+			throw new \Exception('S3::input_resource(): Invalid resource or buffer size');
 		}
 		$input = array('size' => $buffer_size, 'md5sum' => $md5sum);
 		$input['fp'] =& $resource;
@@ -390,7 +390,7 @@ class S3 {
 			$rest->response->error = array('code' => $rest->response->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->response->error !== false)
 		{
-			throw new Exception(sprintf("S3::put_object(): [%s] %s", $rest->response->error['code'], $rest->response->error['message']));
+			throw new \Exception(sprintf("S3::put_object(): [%s] %s", $rest->response->error['code'], $rest->response->error['message']));
 		}
 		return true;
 	}
@@ -457,7 +457,7 @@ class S3 {
 			$rest->response->error = array('code' => $rest->response->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->response->error !== false)
 		{
-			throw new Exception(sprintf("S3::get_object({$bucket}, {$uri}): [%s] %s", $rest->response->error['code'], $rest->response->error['message']));
+			throw new \Exception(sprintf("S3::get_object({$bucket}, {$uri}): [%s] %s", $rest->response->error['code'], $rest->response->error['message']));
 		}
 		return $rest->response;
 	}
@@ -479,7 +479,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::get_object_info({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::get_object_info({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return $rest->code == 200 ? $return_info ? $rest->headers : true : false;
 	}
@@ -514,7 +514,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::copy_object({$src_bucket}, {$src_uri}, {$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::copy_object({$src_bucket}, {$src_uri}, {$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return isset($rest->body->last_modified, $rest->body->e_tag) ? array('time' => strtotime((string)$rest->body->last_modified), 'hash' => substr((string)$rest->body->e_tag, 1, -1)) : false;
 	}
@@ -577,7 +577,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::set_bucket_logging({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::set_bucket_logging({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return true;
 	}
@@ -601,7 +601,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::get_bucket_logging({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::get_bucket_logging({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		// No logging
 		if (!isset($rest->body->logging_enabled))
@@ -637,7 +637,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::get_bucket_location({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::get_bucket_location({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return(isset($rest->body[0]) && (string)$rest->body[0] !== '') ? (string)$rest->body[0] : 'US';
 	}
@@ -705,7 +705,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::set_access_control_policy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::set_access_control_policy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return true;
 	}
@@ -727,7 +727,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::get_access_control_policy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::get_access_control_policy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		
 		$acp = array();
@@ -775,7 +775,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::delete_object(): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::delete_object(): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return true;
 	}
@@ -891,7 +891,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::create_distribution({$bucket}, " . (int)$enabled . ", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::create_distribution({$bucket}, " . (int)$enabled . ", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		elseif ($rest->body instanceof Simple_XML_Element)
 			return self::__parse_cloud_front_distribution_config($rest->body);
@@ -916,7 +916,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::get_distribution($distribution_id): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::get_distribution($distribution_id): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		elseif ($rest->body instanceof Simple_XML_Element)
 		{
@@ -948,7 +948,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::update_distribution({$dist['id']}, " . (int)$enabled . ", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::update_distribution({$dist['id']}, " . (int)$enabled . ", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		else
 		{
@@ -978,7 +978,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::delete_distribution({$dist['id']}): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::delete_distribution({$dist['id']}): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		return true;
 	}
@@ -1000,7 +1000,7 @@ class S3 {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
 		if ($rest->error !== false)
 		{
-			throw new Exception(sprintf("S3::list_distributions(): [%s] %s", $rest->error['code'], $rest->error['message']));
+			throw new \Exception(sprintf("S3::list_distributions(): [%s] %s", $rest->error['code'], $rest->error['message']));
 		}
 		elseif ($rest->body instanceof Simple_XML_Element && isset($rest->body->distribution_summary))
 		{
