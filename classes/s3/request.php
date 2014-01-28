@@ -230,7 +230,10 @@ final class S3_Request
 		if ($this->response->code == 200 && $this->fp !== false)
 			return fwrite($this->fp, $data);
 		else
+		{
+			! isset($this->response->body) and $this->response->body = '';
 			$this->response->body .= $data;
+		}
 		return strlen($data);
 	}
 	
