@@ -287,7 +287,7 @@ class S3 {
 	{
 		if (!file_exists($file) || !is_file($file) || !is_readable($file))
 		{
-			throw new Exception('S3::input_file(): Unable to open input file: ' . $file);
+			throw new \Exception('S3::input_file(): Unable to open input file: ' . $file);
 		}
 		return array('file' => $file, 'size' => filesize($file), 'md5sum' => $md5sum !== false ? (is_string($md5sum) ? $md5sum : base64_encode(md5_file($file, true))) : '');
 	}
